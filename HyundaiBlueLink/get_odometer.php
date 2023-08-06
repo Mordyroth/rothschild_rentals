@@ -7,7 +7,9 @@ $command = "node HyundaiBlueLink/status.js " . escapeshellarg($vin);
 
 // Execute the command and capture the output
 exec($command, $output);
-
+// Debugging code
+echo "Command: $command\n";
+print_r($output);
 // Return the odometer reading (assuming it's the first line of the output)
 echo $output[0];
 ?>
