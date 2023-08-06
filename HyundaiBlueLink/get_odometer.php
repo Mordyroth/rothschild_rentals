@@ -1,6 +1,13 @@
 <?php
+// Get the VIN from the query string
 $vin = $_GET['vin'];
-$output = null;
-exec("node status.js $vin", $output);
-echo $output[0]; // Assuming the odometer reading is the first line of output
+
+// Define the command to run the status.js script with Node.js, passing the VIN
+$command = "node HyundaiBlueLink/status.js " . escapeshellarg($vin);
+
+// Execute the command and capture the output
+exec($command, $output);
+
+// Return the odometer reading (assuming it's the first line of the output)
+echo $output[0];
 ?>
