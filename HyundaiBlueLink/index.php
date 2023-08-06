@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="status.js"></script> <!-- Include the status.js file -->
 </head>
 <body>
 heyppp
