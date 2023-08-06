@@ -1,0 +1,95 @@
+hr {
+  margin: 1px;
+}
+.battery-container {
+  width: 50px;
+  height: 30px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  background-color: #eee;
+}
+
+.battery-level {
+  width: 80%;
+  height: 80%;
+  background-color: #50C878;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 3px;
+  transition: width 0.5s ease-in-out;
+}
+
+.battery-cap {
+  width: 6px;
+  height: 10px;
+  background-color: #aaa;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translate(0, -50%);
+  border-radius: 1px;
+}
+
+.battery-level.empty {
+  background-color: #ff6347;
+}
+
+.battery-level::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 10px;
+  background-color: #aaa;
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  transform: translate(0, -50%);
+}
+
+.lock-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.bolt-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+  margin-right: 100px;
+}
+
+.spinner {
+  position: absolute;
+  right: 35px; /* adjust the value for the distance from the right edge of the parent element */
+  top: 80%;
+  transform: translateY(-50%);
+  width: 100px;
+  height: 100px;
+  display: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+.w3-cell {
+  position: relative;
+}
+
+
+@media (max-width: 768px) {
+  .lock-icon {
+    width: 20px;
+  }
+}

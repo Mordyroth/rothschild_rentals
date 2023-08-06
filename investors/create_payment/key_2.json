@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "stone-armor-116813",
+  "private_key_id": "3714383068434e10b290ea3fcb351b845921cac7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDH/165YSKjKEP2\neeXT0GJekMxBO+UmacpWBU9AyJq922dhIK8oh6lGxQu1vbD622gXStn469yTmz0Q\nf2CJ+qRlgdM4ZNh+0Jqg4hXvEHB+GwoxUL68dwnLbktS1TJ6jTLl4ntjfYr8KnmJ\nbqdaW6nwhUBLcEoh/MJvg/DNELsejY44rJ0oNNb1wTPM6OSVlmQL3TkGjmymiYhj\n2K6lhIUK0jdqsCSuUAk9Lk/p0faESV2IRgqE8NsD3xBqFwR0kCeQsZSV5AnVaftY\nq2/sPa8wW+rXD2sepzyP7Dh06gJhGbCMggBGFFhaJ0Q/Gi399Xkk7U4+5NWS/DiG\nvbWG5WuDAgMBAAECggEAV9gNUYxeK97INy7kaSwqwNGFvZNiu4QU6MKNRG24NfL0\nDd/Ov5USn3B2C74FSbHsHur0IZbre/PgFupzyzcJVUJ4NVlqFA1pFYgoTShh2Knk\nyLNoC5yXc0B/GiNleBmjxQA85P6j+M1pM5mkLRZ85pWIn3nzPclo15VSw6d5INoR\njU8pqV2Cy8XnBdZorM8pn9VjaJ3fbEPMTcHeVfSwALmKd9lILWJguMH8R6U1uuei\nSNntyGac4xC7MEfujSJA3gZbQGFjZwRqWOxCBhcGrbexzrbwnYhI62dXmYK8U3jT\nlmJLxi9ZCFeMOysuGuRUg4tOhoHZhlhnfkU+oM/qCQKBgQD3lQCGseHBBcoj/k4p\nlsC7PLzsWkIl5uqPE05CGV9bHOMiLLRTLs/eeW3MEnaN7yHSSeuTYvzCDB5iurJY\nUzTVmB0hLMKF9s1/bf0qifb4/cSoAHK3xloW1CCMTJUWC7oifd+lXqNck4xasSV5\n4l4El2CfEq0FaHxyTjHmhrRjuQKBgQDOzC8dLSuupJC7ZwUAakW5rgnNNFHKNqb8\nd4Fmnx+Xq37h7s3F0KyjK7WMlQ6erzVzkvH3lL7dHSTNWrNd6Hn65eW6sqIjKfiI\nFrce0tfzirmqM8kkaTaF6eV/sShbA5fLyL4FXQdB2XHsEcUKo7x+F5kyVXCcP87p\n0ckdrOefGwKBgA3hIohqjHdftbdS2FrogqF8hDLT1IV/boLa2DZIadoXwnv1+Z34\nL9sO/6LDHjZSw5igYD6A/B58w29RfBILiBi5UFi9w6Hy9g5AwkKSPXAz+cRZUhUP\nX5mMBs8Ws/zqZ2Lrn5ALwCi+dM3YxHsSv6aOPfJs/5ogA2n9DDsaLh6xAoGBAJwW\nLbF9+KyW9c8dUP8hN4OQw0EprlpMqfmBUiBdFoFqJhjuIE6g1M1MHnn/v8syP8v+\nK7hNg0ptxutg/GVzJS6k+6LRVePot/gv/QO87Nab7Mt0zus2prqo8lpRIz6fFaHw\n4Mw3jVS8hWpDd1AyigE6Wp1NM/QbjVeayowlh6XlAoGAGCYTT6Q6mIXWUllD5Cfd\nbxrEpfoellvNUSy0VLVnTEydMqF0TblfMwUH0dikv65+b+kh0b8toPsa1sScvDdU\neTZS8LX6ll6q9j/nAbWUvY9RbRZjoAVMZmd8XM93ZwOPKZ+yOz73noU6wo9Vj9Oe\ndZDuK0OPBf2nJ1DxLrj931U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "rothschild-rentals@stone-armor-116813.iam.gserviceaccount.com",
+  "client_id": "113679622264500214660",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rothschild-rentals%40stone-armor-116813.iam.gserviceaccount.com"
+}

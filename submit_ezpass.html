@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openForm(event, 'Ezpass')">Ezpass</button>
+            <button class="tab-button" onclick="openForm(event, 'TuroReservations')">Turo Reservations</button>
+        </div>
+        <div id="Ezpass" class="tab-content">
+            <form action="read_ezpass.php" method="post" enctype="multipart/form-data">
+                <label for="file">Select a .csv file:</label>
+                <input type="file" name="file" id="file">
+                <input type="submit" name="submit" value="Upload">
+            </form>
+        </div>
+        <div id="TuroReservations" class="tab-content" style="display: none;">
+            <form action="read_turo_reservations.php" method="post" enctype="multipart/form-data">
+                <label for="file">Select a .csv file:</label>
+                <input type="file" name="file" id="turo-file">
+                <input type="submit" name="submit" value="Upload">
+            </form>
+        </div>
+
+    </div>
+    <script>
+        function openForm(evt, formName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+            }
+            document.getElementById(formName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>
