@@ -20,12 +20,21 @@ heyppp
 </form>
 
 <script>
-    // JavaScript code to fetch the odometer readings for each car
-    // Replace the VINs with the actual VINs for your cars
-    fetchOdometer('KMHLS4AGXPU595867');
-    fetchOdometer('KMHLS4AG5PU567118');
-    // ...
+function fetchOdometer(vin) {
+  fetch(`get_odometer.php?vin=${vin}`)
+    .then(response => response.text())
+    .then(odometer => {
+      document.getElementById(`odometer_${vin}`).innerText = `Odometer: ${odometer}`;
+    })
+    .catch(error => console.error('Error fetching odometer:', error));
+}
+
+// Fetch the odometer readings for each car
+fetchOdometer('KMHLS4AGXPU595867');
+fetchOdometer('KMHLS4AG5PU567118');
+// ...
 </script>
+
 
 </body>
 </html>
