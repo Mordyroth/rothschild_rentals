@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
             match_up_ezpass();
             post_ezpass_charges();
             chargeTransponderRental();
-            match_up_ezpass_turo();
+            //match_up_ezpass_turo();
             echo "Number of ezpass entries that already exsists in the ezpass table: " . $amountAlreadyExsists;
             // Close the file
             fclose($handle);

@@ -13,7 +13,7 @@ define("SERVER", "localhost");
 define("USERNAME", "root");
 
 //url of server
-    define("HOST_URL", "http://52.42.72.117/");
+define("HOST_URL", "http://52.42.72.117/");
 
    
 
@@ -120,7 +120,7 @@ function query_ezpass(/* $sql [, ... ] */)
 function find_vehicle_info($search) {
     $vehicle_info = query_ezpass("SELECT * FROM car_info");
     foreach ($vehicle_info as $item) {
-        if ($item['plate'] == $search || $item['ezpass'] == $search) {
+        if ($item['plate'] == $search || $item['ezpass'] == $search || (!empty($item['old_plate']) && $item['old_plate'] == $search)) {
             return $item;
         }
     }
@@ -146,6 +146,11 @@ function upload_hq_reservations() {
       $file = file_get_contents('https://api-america-3.us5.hqrentals.app/api-america-3/car-rental/reservations/' . $i, false, $context);
       if (!$file) {
         echo "empty";
+        $check = false;
+        $check = query("SELECT * FROM reservations WHERE hq_id = ?", $i);
+        if (!empty($check)){
+            query("UPDATE reservations SET not_found_in_hq = ? WHERE hq_id = ?", 1, $i);
+        }
         $error++;
         if ($error > 10) {
           break;
@@ -210,13 +215,17 @@ function car_info($nickname) {
     if (empty($info)) {
         $info = query_ezpass("SELECT * FROM car_info WHERE car_nickname_1 = ?", $nickname);
     }
+    if (empty($info)) {
+        echo "</br>empty:" . $nickname . "endempty<br/>";
+        echo "</br>nickname:" . $info[0]['car_nickname'] . "end nickname</br>";
+    }
     return $info[0];
 }
 
 function match_up_ezpass() {
     $tolls = query_ezpass("SELECT * FROM ezpass WHERE (match_status IS NULL OR match_status = ? OR match_status = ?)  AND (match_status != ?)", "not matched", "not tested", "Service Fee");
 
-    $trips = query("SELECT * FROM reservations");
+    $trips = query("SELECT * FROM reservations WHERE not_found_in_hq IS NULL");
 
     // Loop through each toll charge and assign it to the corresponding customer
     foreach ($tolls as $toll) {
@@ -254,9 +263,14 @@ function match_up_ezpass() {
                 //echo "No Vehicle Key Ezpass matchup, res #" . $trip['hq_id'] . "<br/>";
                 continue;
             }
-            
+            if (empty($car_info)) {
+                echo "</br>car info empty</br>";
+                echo "trip res #" . $trip['hq_id'] . "end res#<br/>";
+                echo "nickname true:" . $trip['vehicle_key'] . "end</br>";
+                echo "nickname true:" . $car_info['plate'] . "end</br>";
+            }
 
-            if (($toll['tag_plate'] == $car_info['plate'] || $toll['tag_plate'] == $car_info['ezpass']) &&
+            if (($toll['tag_plate'] == $car_info['plate'] || $toll['tag_plate'] == $car_info['ezpass'] || (isset($car_info['old_plate']) && $toll['tag_plate'] == $car_info['old_plate'])) &&
                 strtotime($trip['pickup_date']) <= $timestamp &&
                 strtotime($trip['return_date']) >= $timestamp) {
                 query_ezpass("UPDATE ezpass SET match_status = ?, matched = ? WHERE id = ?", "matched", "hq_" . $trip['hq_id'], $toll['id']);
@@ -278,7 +292,7 @@ function match_up_superchargers() {
     $charges = query_ezpass("SELECT * FROM supercharger WHERE match_status != ?", "matched");
     echo count($charges) . "<br/>";
 
-    $trips = query("SELECT * FROM reservations");
+    $trips = query("SELECT * FROM reservations WHERE not_found_in_hq IS NULL");
 
     // Loop through each toll charge and assign it to the corresponding customer
     foreach ($charges as $charge) {
@@ -452,9 +466,14 @@ function post_ezpass_charges() {
         'vehicle_id' => $vehicle_id,
         'charge_date' => $toll['transaction_date'] . " " . $toll['exit_time'],
         'charge_amount' => preg_replace("/[^0-9\.]/", "", $toll['amount']),
-        'label' => $toll['agency'] . ", " . $toll["exit_plaza"]
+        'label' => $toll['agency'] . ", " . $toll["exit_plaza"] . ", Tag/Plate: " . $toll["tag_plate"]
         // add more parameters as needed
         );
+        ?>
+        <pre>
+        <?php //print_r($data) ?>
+        </pre>
+        <?php
         // Encode the request parameters as JSON
         $data_json = json_encode($data);
 

@@ -18,24 +18,28 @@ if ($current_month <= 2) {
     $two_months_ago_year = $current_year;
 }
 
-$start_date = $two_months_ago_year . '-' . str_pad($two_months_ago_month, 2, '0', STR_PAD_LEFT) . '-01 00:00:00';
+
+// Uncomment this for two past months
+//$start_date = $two_months_ago_year . '-' . str_pad($two_months_ago_month, 2, '0', STR_PAD_LEFT) . '-01 00:00:00';
+//$start_date = date('2020-m-d H:i:s');
+$start_date = date('2023-09-01 H:i:s');
+
 $end_date = date('Y-m-d H:i:s'); // This will be the current date and time.
 
-$no_car_match = query_ezpass("SELECT * FROM ezpass WHERE (transaction_format_date >= ? AND transaction_format_date < ?) AND (match_status = ? OR match_status = ?) AND description != ? ORDER BY transaction_format_date DESC", $start_date, $end_date, "not matched", "not tested", "Prepaid Payment");
+$no_car_match = query_ezpass("SELECT * FROM ezpass WHERE (transaction_format_date >= ? AND transaction_format_date < ?) AND (match_status = ? OR match_status = ?) AND description != ? AND description != ? AND description != ? AND description != ? ORDER BY transaction_format_date DESC", $start_date, $end_date, "not matched", "not tested", "Prepaid Payment", "Dispute Cr", "Service Fee", "Stmt Fee");
 
 foreach ($no_car_match as $no_match) {
     $x = $no_match['tag_plate'];
     $exists = false;
 
     foreach ($cars as $childArray) {
-        if ($childArray["ezpass"] === $x || $childArray["plate"] === $x) {
+        if ($childArray["ezpass"] === $x || $childArray["plate"] === $x || $childArray["old_plate"] === $x) {
             $exists = true;
             break;
-        }
+        } 
     }
 
     if (!$exists) {
-        // The value of x doesn't exist in any 'ezpass' or 'plate' field.
         $no_match_results[] = $no_match;
     } 
 }
@@ -78,11 +82,12 @@ $results = []; // Initialize an empty array to store the row data
 foreach ($cars as $car) {
     $total = 0;
     $plate = $car['plate'];
+    $old_plate = $car['old_plate'];
     $tag = $car['ezpass'];
     $vin = $car['vin'];
     
 
-    $rows = query_ezpass("SELECT * FROM ezpass WHERE (transaction_format_date >= ? AND transaction_format_date < ?) AND (tag_plate = ? || tag_plate = ?) AND (match_status = ? OR match_status = ?) ORDER BY transaction_format_date DESC", $start_date, $end_date, $plate, $tag, "not matched", "not tested");
+    $rows = query_ezpass("SELECT * FROM ezpass WHERE (transaction_format_date >= ? AND transaction_format_date < ?) AND (tag_plate = ? || tag_plate = ? || tag_plate = ?) AND (match_status = ? OR match_status = ?) ORDER BY transaction_format_date DESC", $start_date, $end_date, $plate, $tag, $old_plate, "not matched", "not tested");
 
     //echo $car['car_nickname'] . "<br/>";
     
@@ -203,4 +208,12 @@ if (!empty($no_match_results)) {
     echo "</pre>";
 }
 
+// alert about charges that bwere matched up but we were not succsesful in uploading to hq
+$error_upload = query_ezpass("SELECT * FROM ezpass WHERE matched LIKE ? AND hq_charge_id IS NULL", "hq_%");
+if (!empty($error_upload)) {
+    echo "Alert Mordy! These charges were matched up in our back end system but there was an error adding them to hq reservations.";
+    echo "<pre>";
+    print_r($error_upload);
+    echo "</pre>";
+}
 ?>

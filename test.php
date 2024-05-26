@@ -27,7 +27,7 @@ function add_columns()
 }
 
 // call the add_columns function
-add_columns();
+//add_columns();
 $opts = array(
     'http'=>array(
       'method'=>"GET",
@@ -44,7 +44,7 @@ $opts = array(
 
 
   //for ($i=1; $i < 100000; $i++) {
-      $file = file_get_contents('https://api-america-3.us5.hqrentals.app/api-america-3/car-rental/reservations/' . "442", false, $context);
+      $file = file_get_contents('https://api-america-3.us5.hqrentals.app/api-america-3/car-rental/reservations/' . "489/external-charges", false, $context);
      
         $x = json_decode($file, true);
         $x = $x['data'];

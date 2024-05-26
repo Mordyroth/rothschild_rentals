@@ -120,38 +120,38 @@ function formatAddress($address) {
     // Split the address into parts
     $address_parts = explode(', ', $address);
 
-    // Extract relevant parts
-    $street = $address_parts[0];
-    $city = $address_parts[1];
-    $state_zip = $address_parts[2];
+    // Assign default values and extract relevant parts
+    $street = isset($address_parts[0]) ? $address_parts[0] : '';
+    $city = isset($address_parts[1]) ? $address_parts[1] : '';
+    $state_zip = isset($address_parts[2]) ? $address_parts[2] : '';
     $country = isset($address_parts[3]) ? $address_parts[3] : '';
 
-    // Split state and zip code
-    preg_match('/(.*\D)(\d+)/', $state_zip, $state_zip_parts);
-    $state = isset($state_zip_parts[1]) ? trim($state_zip_parts[1]) : '';
-    $zip = isset($state_zip_parts[2]) ? $state_zip_parts[2] : '';
+    // Split state and zip code, if present
+    $state = $zip = '';
+    if ($state_zip) {
+        preg_match('/(.*\D)(\d+)/', $state_zip, $state_zip_parts);
+        $state = isset($state_zip_parts[1]) ? trim($state_zip_parts[1]) : '';
+        $zip = isset($state_zip_parts[2]) ? $state_zip_parts[2] : '';
+    }
 
-    // Remove the word "township" from the city name, if present
-    $city = str_ireplace('township', '', $city);
+    // Process city and street
+    $city = $city ? str_ireplace('township', '', $city) : '';
     $city = trim($city);
-
-    // Remove the street number
-    $street_name = preg_replace('/^[\d-]+ /', '', $street);
-
-    // Abbreviate directional words
-    $street_name = abbreviateDirection($street_name);
+    $street_name = $street ? preg_replace('/^[\d-]+ /', '', $street) : '';
+    $street_name = $street_name ? abbreviateDirection($street_name) : '';
 
     // Check if the address is in the United States
     if ($country === 'United States' || $country === '') {
-        // Shorten the state name
-        $state_short = stateToAbbreviation($state);
-        // Return formatted address
-        return "$street_name, $city, $state_short";
+        // Shorten the state name, if available
+        $state_short = $state ? stateToAbbreviation($state) : '';
+        // Construct and return formatted address
+        return trim("$street_name, $city, $state_short", ', ');
     } else {
         // Return formatted address including the country
-        return "$street_name, $city, $country";
+        return trim("$street_name, $city, $country", ', ');
     }
 }
+
 
 function abbreviateDirection($string) {
     $directions = array(
